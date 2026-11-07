@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>4-hour CNC audio dataset by design of experiments | Allen Moncey Varghese</title>
-<meta name="description" content="A 4-hour CNC machining audio dataset designed with DOE across feed rate and depth of cut, used as a reproducible benchmark for machining digital-twin models.">
+<meta name="description" content="A 4-hour CNC machining audio dataset from a 3x3 factorial design of spindle speed and feed per tooth on a Pocket NC V2-10, used to train and evaluate machine-audio models for digital twins.">
 <meta name="author" content="Allen Moncey Varghese">
 <link rel="canonical" href="https://allenmoncey.github.io/machining-doe.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Allen Moncey Varghese">
 <meta property="og:title" content="4-hour CNC audio dataset by design of experiments | Allen Moncey Varghese">
-<meta property="og:description" content="A 4-hour CNC machining audio dataset designed with DOE across feed rate and depth of cut, used as a reproducible benchmark for machining digital-twin models.">
+<meta property="og:description" content="A 4-hour CNC machining audio dataset from a 3x3 factorial design of spindle speed and feed per tooth on a Pocket NC V2-10, used to train and evaluate machine-audio models for digital twins.">
 <meta property="og:url" content="https://allenmoncey.github.io/machining-doe.html">
 <meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -34,29 +34,31 @@
 <header class="case-head">
 <p class="eyebrow">Design of experiments · Data</p>
 <h1>4-hour CNC audio dataset by design of experiments</h1>
-<p class="lead">A designed experiment varying feed rate and depth of cut to build a reproducible benchmark for machining digital-twin models.</p>
-<dl class="case-meta"><div><dt>Role</dt><dd>Experiment design, data collection, curation</dd></div><div><dt>When</dt><dd>ASU research</dd></div><div><dt>Factors</dt><dd>Feed rate × depth of cut</dd></div></dl>
+<p class="lead">A 3 × 3 factorial experiment on a desktop CNC mill, spindle speed × feed per tooth, recorded at 22.05 kHz. It is the benchmark behind both of my papers.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Experiment design, data collection, curation</dd></div><div><dt>Machine</dt><dd>Pocket NC V2-10 desktop CNC</dd></div><div><dt>Factors</dt><dd>Spindle speed × feed per tooth</dd></div></dl>
 </header>
 <div class="case-body">
 <article>
 <h2>The problem</h2>
-<p>Models for machining digital twins are hard to compare when everyone trains on ad-hoc recordings. A useful benchmark has to cover the operating range systematically and record exactly which conditions produced each signal.</p>
+<p>Machine-audio models for digital twins are hard to compare when they are trained on ad-hoc recordings. A useful benchmark covers the operating range systematically and records exactly which process condition produced each sound.</p>
 <h2>Approach</h2>
-<ol class="flow">
-<li>Choose feed rate and depth of cut as the controlled factors and set their levels.</li>
-<li>Lay out the runs with design-of-experiments methodology.</li>
-<li>Record CNC audio for every run with its process parameters.</li>
-<li>Curate and label the recordings into a benchmark for model evaluation.</li>
-</ol>
+<ul>
+<li><strong>Process:</strong> facing operations on wood blocks with a single-flute end mill on a Pocket NC V2-10 desktop CNC.</li>
+<li><strong>Sensing:</strong> a microphone mounted inside the machine&rsquo;s protective cover, recording at 22.05 kHz.</li>
+<li><strong>Factors:</strong> spindle speed at 5,500, 7,000 and 8,500 RPM, and feed per tooth at 0.0006, 0.0008 and 0.001 in.</li>
+<li><strong>Held constant:</strong> step-down (0.082 in) and step-over (0.070 in), which made little audible difference when varied.</li>
+<li><strong>Design:</strong> full 3 × 3 factorial, nine conditions, each run twice.</li>
+</ul>
 <h2>Results</h2>
-<div class="results"><div><strong>4 hours</strong><span>of labeled CNC audio</span></div><div><strong>2 factors</strong><span>feed rate and depth of cut, systematically varied</span></div></div>
-<p>The result is a reproducible, 4-hour benchmark dataset for evaluating machining digital-twin models across controlled cutting conditions.</p>
+<div class="results"><div><strong>≈ 4 hours</strong><span>of labeled machining audio</span></div><div><strong>≈ 30 min</strong><span>per process condition</span></div><div><strong>≈ 51,840</strong><span>one-second frames (50% overlap) for training</span></div></div>
+<p>The dataset is the training and test data for both my <a href="audio-autoencoder.html">complex-valued autoencoder</a> (2025) and the <a href="sensor-codec.html">VQ-VAE sensor codec</a> (2026). It captures spindle harmonics, tool-engagement frequencies, cutting noise and the transients of tool entry, exit and spindle start/stop.</p>
+<h2>Figures</h2><figure class="fig"><a href="images/pocketnc-setup.jpg"><img src="images/pocketnc-setup.jpg" width="1042" height="480" alt="Photo of the Pocket NC desktop CNC inside its enclosure, with the microphone, milling head, wood work piece and base plate labeled." loading="lazy" decoding="async"></a><figcaption>Experimental setup: Pocket NC with the work piece on the base plate and the microphone on the enclosure. Figure 5, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure>
 <h2>My role</h2>
-<p>I designed the experiment, ran the data collection and curated the dataset.</p>
+<p>I designed the experiment, set up the machine and microphone, ran the cuts and curated the recordings.</p>
 </article>
 <aside class="side" aria-label="Project details">
-<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Design of experiments</li><li>CNC machining</li><li>Audio acquisition</li><li>Python</li></ul></div>
-<div class="panel"><h3>Links</h3><ul class="links"><li data-code="machining-doe" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=4-hour%20CNC%20audio%20dataset%20by%20design%20of%20experiments">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Design of experiments</li><li>CNC machining</li><li>Audio acquisition</li><li>Python</li><li>torchaudio</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2025.06.166">2025 paper (dataset description) ↗</a></li><li><a href="https://doi.org/10.1016/j.mfglet.2026.08.060">2026 paper ↗</a></li><li data-code="machining-doe" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=4-hour%20CNC%20audio%20dataset%20by%20design%20of%20experiments">Ask me about this project</a></li></ul></div>
 
 </aside>
 </div>

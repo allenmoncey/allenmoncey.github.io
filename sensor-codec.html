@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sensor-token codec for real-time digital twins | Allen Moncey Varghese</title>
-<meta name="description" content="FC-VQ-VAE compresses high-frequency CNC audio and accelerometer streams about 25x into discrete tokens for real-time digital-twin synchronization. Published in Manufacturing Letters (2026).">
+<meta name="description" content="A VQ-VAE framework for digital twins limited by network bandwidth and edge hardware: discrete-token transmission of 22.05 kHz machine audio and 1 kHz to 22.05 kHz reconstruction. Published in Manufacturing Letters (2026).">
 <meta name="author" content="Allen Moncey Varghese">
 <link rel="canonical" href="https://allenmoncey.github.io/sensor-codec.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Allen Moncey Varghese">
 <meta property="og:title" content="Sensor-token codec for real-time digital twins | Allen Moncey Varghese">
-<meta property="og:description" content="FC-VQ-VAE compresses high-frequency CNC audio and accelerometer streams about 25x into discrete tokens for real-time digital-twin synchronization. Published in Manufacturing Letters (2026).">
+<meta property="og:description" content="A VQ-VAE framework for digital twins limited by network bandwidth and edge hardware: discrete-token transmission of 22.05 kHz machine audio and 1 kHz to 22.05 kHz reconstruction. Published in Manufacturing Letters (2026).">
 <meta property="og:url" content="https://allenmoncey.github.io/sensor-codec.html">
 <meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -34,30 +34,34 @@
 <header class="case-head">
 <p class="eyebrow">Machine learning · Digital twins</p>
 <h1>Sensor-token codec for real-time digital twins</h1>
-<p class="lead">FC-VQ-VAE that turns 22 kHz CNC audio and 10 kHz vibration into discrete tokens a digital twin can stream.</p>
-<dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2026, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 49 (2026)</dd></div></dl>
+<p class="lead">A VQ-VAE framework that sends machine audio to a digital twin as discrete codebook tokens, and rebuilds 22.05 kHz signals from low-cost 1 kHz sensors.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>First author; framework design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2026, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 49 (2026), NAMRC 54</dd></div></dl>
 </header>
 <div class="case-body">
 <article>
 <h2>The problem</h2>
-<p>A digital twin of a machine tool is only as current as the sensor data it receives. Machining audio is sampled at 22 kHz and accelerometers at 10 kHz, so streaming raw signals from many machines quickly exceeds the network bandwidth and edge hardware available on a shop floor. The twin falls behind the machine it is meant to mirror.</p>
+<p>A digital twin is only as current as the sensor data it receives, and two things stop high-frequency data from reaching it:</p>
+<ul>
+<li><strong>Network bandwidth.</strong> One vibration sensor sampling at 50 kHz produces over 4 GB an hour. A hundred of them need about 160 Mbps of raw data, more than the 100–300 Mbps that industrial Wi-Fi delivers in practice.</li>
+<li><strong>Edge hardware.</strong> Industrial data-acquisition channels that sample at 50–100 kHz cost $1,000–5,000 each. The $50–200 microcontroller devices a plant can afford at scale capture much lower rates and miss the high-frequency signatures of tool wear and bearing faults.</li>
+</ul>
 <h2>Approach</h2>
-<p>I developed the <strong>FC-VQ-VAE</strong>, a vector-quantized variational autoencoder for complex-valued sensor data. The encoder maps each window of signal onto entries in a learned codebook, so the stream sent to the twin is a short sequence of discrete token indices instead of raw samples. The decoder rebuilds the signal on the twin side.</p>
-<ol class="flow">
-<li>Capture synchronized CNC audio (22 kHz) and accelerometer (10 kHz) signals during machining.</li>
-<li>Encode signal windows into a compact latent space and quantize them against a learned codebook.</li>
-<li>Transmit only the token indices to the digital twin, within edge-hardware and bandwidth budgets.</li>
-<li>Reconstruct the signal from the tokens, and classify machining condition directly from the tokens.</li>
-</ol>
+<p>I built one <strong>vector-quantized variational autoencoder (VQ-VAE)</strong> framework with two operating modes, one for each constraint:</p>
+<ul>
+<li><strong>Downsampling mode (bandwidth).</strong> A good sensor captures 22.05 kHz audio. The encoder turns each one-second frame into entries from a learned codebook, so only short token indices cross the network, and the decoder rebuilds the full 22.05 kHz signal at the twin.</li>
+<li><strong>Upsampling mode (hardware).</strong> A cheap edge device sends a 1 kHz signal. The model reconstructs a 22.05 kHz signal, including frequency content above the 500 Hz limit of the input.</li>
+</ul>
+<p>I compared two ways of presenting the signal to the encoder: a five-band FFT frequency-band decomposition and a wavelet decomposition. I also tested five configurations of codebook size (256 or 512 entries) and latent dimension (64 or 128). Training combined a time-domain reconstruction loss, a spectral (FFT) loss and the usual VQ codebook and commitment losses. The data was the 4-hour designed CNC audio dataset (<a href="machining-doe.html">see the dataset project</a>), cut into about 51,840 one-second frames.</p>
 <h2>Results</h2>
-<div class="results"><div><strong>~25×</strong><span>compression of the sensor stream</span></div><div><strong>2 sensors</strong><span>22 kHz audio + 10 kHz accelerometer</span></div><div><strong>Tokens → labels</strong><span>machining-condition classifier runs on the compressed codes</span></div></div>
-<p>The token stream was about 25 times smaller than the raw signal. A machining-condition classifier trained on the tokens alone showed that the compressed codes keep enough information for process monitoring and anomaly detection, so the twin can act on the data without first decompressing it.</p>
+<div class="results"><div><strong>37.8 dB</strong><span>PSNR, 0.953 SSIM reconstructing audio from tokens (downsampling)</span></div><div><strong>35.2 vs 34.4 dB</strong><span>PSNR, upsampling 1 kHz → 22.05 kHz, vs the best interpolation (sinc)</span></div><div><strong>2.4× lower</strong><span>Fréchet Audio Distance than my earlier continuous autoencoder (3.18 vs 7.69)</span></div><div><strong>≈ 36 ms</strong><span>to process one second of audio</span></div></div>
+<p>Wavelet decomposition beat frequency-band decomposition in both modes, and the 256-entry codebook beat the 512-entry one. The best downsampling model reconstructed audio at 37.8 dB PSNR and 0.953 SSIM. In upsampling mode the model beat linear, cubic and sinc interpolation on PSNR, SSIM and Fréchet Audio Distance (3.54 vs 4.95 for sinc), and restored high-frequency content that interpolation cannot. Raw 22.05 kHz, 16-bit audio is 352.8 kbps; the upsampling mode needs only a 16 kbps stream from the edge device.</p>
+<h2>Figures</h2><figure class="fig"><a href="images/codec-framework.png"><img src="images/codec-framework.png" width="1600" height="448" alt="Diagram: machine sensors feed an edge device, where high-rate data is downsampled or low-rate data is sent as is, through the cloud to the digital twin, which reconstructs high-fidelity sensor data." loading="lazy" decoding="async"></a><figcaption>Sensor data flowing through the framework: downsampling for bandwidth limits, upsampling for low-cost hardware. Figure 1, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2026.08.060"><em>Manufacturing Letters</em> 49 (2026)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/codec-architecture.png"><img src="images/codec-architecture.png" width="1110" height="726" alt="VQ-VAE architecture: a 1D convolutional encoder, a vector quantizer that picks the nearest codebook entry, and a 1D convolutional decoder." loading="lazy" decoding="async"></a><figcaption>VQ-VAE architecture: encoder, vector quantizer and decoder. Figure 2, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2026.08.060"><em>Manufacturing Letters</em> 49 (2026)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/codec-downsampling-fft.png"><img src="images/codec-downsampling-fft.png" width="1600" height="342" alt="Three FFT plots comparing the original machining audio with reconstructions from the WD-256-128 and FB-512-64 models." loading="lazy" decoding="async"></a><figcaption>Downsampling mode: FFT of the original signal and of reconstructions from the best wavelet (WD-256-128) and frequency-band (FB-512-64) models. Figure 7, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2026.08.060"><em>Manufacturing Letters</em> 49 (2026)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/codec-upsampling-fft.png"><img src="images/codec-upsampling-fft.png" width="1600" height="982" alt="Four FFT plots: original 22.05 kHz signal, sinc interpolation from 1 kHz, and reconstructions from the WD-256-64 and FB-512-64 models." loading="lazy" decoding="async"></a><figcaption>Upsampling mode (1 kHz → 22.05 kHz): original signal, sinc interpolation and the best models. Figure 8, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2026.08.060"><em>Manufacturing Letters</em> 49 (2026)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure>
 <h2>My role</h2>
-<p>First author. I designed the architecture, built the training and evaluation pipeline, ran the experiments, built the downstream classifier and wrote the paper with my advisors, Dr. Binil Starly and Dr. Ashif Iquebal.</p>
+<p>First author. I designed the framework and both operating modes, implemented the decompositions and models, ran the configuration study and baselines, and wrote the paper with my advisors, Dr. Binil Starly and Dr. Ashif Iquebal.</p>
 </article>
 <aside class="side" aria-label="Project details">
-<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>VQ-VAE</li><li>Complex-valued networks</li><li>Signal processing</li><li>STFT</li><li>Edge deployment</li></ul></div>
-<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2026.08.060">Paper (DOI) ↗</a></li><li data-code="sensor-codec" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Sensor-token%20codec%20for%20real-time%20digital%20twins">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>VQ-VAE</li><li>Wavelet decomposition</li><li>FFT band filtering</li><li>torchaudio</li><li>PSNR / SSIM / FAD</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2026.08.060">Paper (open access) ↗</a></li><li data-code="sensor-codec" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Sensor-token%20codec%20for%20real-time%20digital%20twins">Ask me about this project</a></li></ul></div>
 <div class="panel"><h3>Cite</h3><p style="font-size:14px;margin:0"><cite>Varghese, A., Starly, B., &amp; Iquebal, A. (2026). Vector quantization of complex sensor data in limited network bandwidth and edge hardware constrained digital twins. <em>Manufacturing Letters</em>, 49, 1550–1561.</cite></p></div>
 </aside>
 </div>

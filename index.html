@@ -53,7 +53,7 @@
 </aside>
 </section>
 <div class="stats" role="list" aria-label="Highlights">
-<div class="stat" role="listitem"><strong>~25×</strong><span>sensor-stream compression for digital twins</span></div>
+<div class="stat" role="listitem"><strong>1 → 22 kHz</strong><span>machine audio rebuilt from low-cost sensors for digital twins</span></div>
 <div class="stat" role="listitem"><strong>2</strong><span>first-author papers, Manufacturing Letters 2025 &amp; 2026</span></div>
 <div class="stat" role="listitem"><strong>25%</strong><span>production cycle-time cut across 15 projects</span></div>
 <div class="stat" role="listitem"><strong>95%</strong><span>on-time delivery in production</span></div>
@@ -68,12 +68,12 @@
 <div class="grid"><article class="card wide">
 <span class="tag">Machine learning · Digital twins</span>
 <h3><a href="sensor-codec.html">Sensor-token codec for real-time digital twins</a></h3>
-<p>FC-VQ-VAE that turns 22 kHz CNC audio and 10 kHz vibration into discrete tokens a digital twin can stream.</p>
-<p class="result">~25× compression · Manufacturing Letters 2026</p>
+<p>A VQ-VAE framework that sends machine audio to a digital twin as discrete codebook tokens, and rebuilds 22.05 kHz signals from low-cost 1 kHz sensors.</p>
+<p class="result">37.8 dB PSNR · 1 kHz → 22.05 kHz · Manufacturing Letters 2026</p>
 </article><article class="card">
 <span class="tag">Generative models · Audio</span>
 <h3><a href="audio-autoencoder.html">Complex-valued autoencoder for machinery audio</a></h3>
-<p>Generates realistic CNC machine sound from complex STFT inputs for virtual factories and VR operator training.</p>
+<p>Generates CNC machine sound from complex STFT inputs so virtual factories and VR training can sound like the real machine.</p>
 <p class="result">MSE ≈ 0.20 · Manufacturing Letters 2025</p>
 </article><article class="card wide">
 <span class="tag">Metal additive manufacturing · Robotics</span>
@@ -93,8 +93,8 @@
 </article><article class="card">
 <span class="tag">Design of experiments · Data</span>
 <h3><a href="machining-doe.html">4-hour CNC audio dataset by design of experiments</a></h3>
-<p>A designed experiment varying feed rate and depth of cut to build a reproducible benchmark for machining digital-twin models.</p>
-<p class="result">4 hours of designed CNC audio</p>
+<p>A 3 × 3 factorial experiment on a desktop CNC mill, spindle speed × feed per tooth, recorded at 22.05 kHz. It is the benchmark behind both of my papers.</p>
+<p class="result">9 conditions × 2 replicates · ~4 hours</p>
 </article><article class="card">
 <span class="tag">Simulation · Statistics</span>
 <h3><a href="seir-simulator.html">Multi-variant epidemic simulator</a></h3>

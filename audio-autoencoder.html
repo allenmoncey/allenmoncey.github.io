@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Complex-valued autoencoder for machinery audio | Allen Moncey Varghese</title>
-<meta name="description" content="A complex-valued convolutional autoencoder that reconstructs and generates CNC machinery audio from complex STFT inputs. Published in Manufacturing Letters (2025).">
+<meta name="description" content="A convolutional autoencoder that reconstructs and generates CNC machine audio from the real and imaginary parts of its STFT, for virtual factories and VR training. Published in Manufacturing Letters (2025).">
 <meta name="author" content="Allen Moncey Varghese">
 <link rel="canonical" href="https://allenmoncey.github.io/audio-autoencoder.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Allen Moncey Varghese">
 <meta property="og:title" content="Complex-valued autoencoder for machinery audio | Allen Moncey Varghese">
-<meta property="og:description" content="A complex-valued convolutional autoencoder that reconstructs and generates CNC machinery audio from complex STFT inputs. Published in Manufacturing Letters (2025).">
+<meta property="og:description" content="A convolutional autoencoder that reconstructs and generates CNC machine audio from the real and imaginary parts of its STFT, for virtual factories and VR training. Published in Manufacturing Letters (2025).">
 <meta property="og:url" content="https://allenmoncey.github.io/audio-autoencoder.html">
 <meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -34,30 +34,32 @@
 <header class="case-head">
 <p class="eyebrow">Generative models · Audio</p>
 <h1>Complex-valued autoencoder for machinery audio</h1>
-<p class="lead">Generates realistic CNC machine sound from complex STFT inputs for virtual factories and VR operator training.</p>
-<dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2025, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 44 (2025)</dd></div></dl>
+<p class="lead">Generates CNC machine sound from complex STFT inputs so virtual factories and VR training can sound like the real machine.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2025, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 44 (2025), NAMRC 53</dd></div></dl>
 </header>
 <div class="case-body">
 <article>
 <h2>The problem</h2>
-<p>Virtual factories and VR operator-training environments feel convincing only when the machines sound right. The sound of a cut carries real process information, and recorded clips cannot cover every combination of tool, material and cutting parameter, so the audio needs to be generated.</p>
+<p>Virtual factories already use cameras, thermal sensors and vibration data, but almost none use sound, even though machinists and monitoring systems rely on it to catch tool wear and spindle problems early. Generating realistic machine audio for each process condition would let a virtual factory or VR trainer sound like the real shop floor. Unlike speech and music, though, there is very little machinery audio to train on, so the model has to learn from a small dataset.</p>
 <h2>Approach</h2>
-<p>I designed a <strong>complex-valued convolutional autoencoder</strong> that works directly on the complex short-time Fourier transform (STFT) of machine audio. Keeping the real and imaginary parts together lets the network model magnitude and phase jointly, which is what audio needs to sound natural once it is converted back to a waveform.</p>
+<p>I designed a <strong>convolutional autoencoder that works on the complex short-time Fourier transform (STFT)</strong> of machine audio. The real and imaginary parts of the STFT go in as two channels, so the network learns magnitude and phase together and the output can be inverted straight back to a waveform.</p>
 <ol class="flow">
-<li>Convert CNC machining audio into complex STFT representations.</li>
-<li>Encode with complex-valued convolution layers into a compact latent representation.</li>
-<li>Decode back to a complex spectrogram and invert to audio.</li>
-<li>Evaluate reconstruction error and listen to generated audio for use in simulation.</li>
+<li>Convert a 0.74-second audio clip to its STFT and split it into real and imaginary components (257 × 128 × 2).</li>
+<li>Encode with 2D convolution layers and SiLU activations; decode with transposed convolutions.</li>
+<li>Split the output back into real and imaginary parts and apply the inverse STFT to get audio.</li>
+<li>Compare real and decoded audio in the time and frequency domains. A second decoder with residual connections extends a 0.74-second clip to 1.48 seconds.</li>
 </ol>
+<p>Training used the 4-hour designed CNC audio dataset (<a href="machining-doe.html">see the dataset project</a>) on an NVIDIA RTX A6000 workstation.</p>
 <h2>Results</h2>
-<div class="results"><div><strong>≈ 0.20</strong><span>reconstruction MSE</span></div><div><strong>NAMRC 53</strong><span>presented; NSF travel award</span></div></div>
-<p>The model reached a reconstruction MSE of about 0.20 and produced high-fidelity machining audio suitable for virtual-factory and VR training environments. The work was presented at NAMRC 53, where I received an NSF travel award.</p>
+<div class="results"><div><strong>≈ 0.20</strong><span>reconstruction mean squared error</span></div><div><strong>6 hours</strong><span>training time for the base model</span></div><div><strong>0.74 → 1.48 s</strong><span>audio extended by the residual decoder</span></div></div>
+<p>The model reconstructed machine audio with a mean squared error of about 0.20, and the frequency spectra of decoded audio closely matched the real recordings. It is a first step toward real-time, condition-specific machine sound in virtual factories and VR operator training. I presented the work at NAMRC 53 with an NSF travel award.</p>
+<h2>Figures</h2><figure class="fig"><a href="images/audio-complex-ae-training.png"><img src="images/audio-complex-ae-training.png" width="1600" height="532" alt="Pipeline: waveform to STFT, split into real and imaginary components, concatenated, passed through encoder and decoder, split again and inverted to a decoded waveform." loading="lazy" decoding="async"></a><figcaption>Training pipeline: the STFT's real and imaginary parts become two input channels, and the decoded output is inverted back to audio. Figure 4, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/audio-fft-real-vs-decoded.png"><img src="images/audio-fft-real-vs-decoded.png" width="1600" height="1083" alt="FFT plots of real machining audio and audio decoded by the autoencoder for the same process condition." loading="lazy" decoding="async"></a><figcaption>Frequency spectrum of real audio and decoded audio for the same process condition. Figure 9, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/audio-digital-twin-uses.jpg"><img src="images/audio-digital-twin-uses.jpg" width="1600" height="502" alt="Diagram showing synthetic machine audio used in a digital twin for VR, root cause analysis and predictive maintenance." loading="lazy" decoding="async"></a><figcaption>Where generated machine audio fits in a digital twin. Figure 1, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure>
 <h2>My role</h2>
 <p>First author. I built the model, the data pipeline and the experiments, and wrote the paper with Dr. Binil Starly and Dr. Ashif Iquebal.</p>
 </article>
 <aside class="side" aria-label="Project details">
-<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>Complex-valued CNNs</li><li>Complex STFT</li><li>Audio DSP</li></ul></div>
-<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2025.06.166">Paper (DOI) ↗</a></li><li data-code="audio-autoencoder" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Complex-valued%20autoencoder%20for%20machinery%20audio">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>Convolutional autoencoders</li><li>Complex STFT</li><li>Audio DSP</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2025.06.166">Paper (open access) ↗</a></li><li data-code="audio-autoencoder" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Complex-valued%20autoencoder%20for%20machinery%20audio">Ask me about this project</a></li></ul></div>
 <div class="panel"><h3>Cite</h3><p style="font-size:14px;margin:0"><cite>Varghese, A., Starly, B., &amp; Iquebal, A. (2025). Complex value autoencoder for machinery audio generation. <em>Manufacturing Letters</em>, 44, 1468–1478.</cite></p></div>
 </aside>
 </div>
