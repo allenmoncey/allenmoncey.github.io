@@ -1,1 +1,74 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Allen Moncey Varghese — manufacturing engineering, machine learning, robotics, and digital twins."><title>Machining experiment benchmark | Allen Varghese</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="index.html">Allen M. Varghese<span style="color:var(--accent)">.</span></a><div class="navlinks"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="research.html">Research</a><a href="engineering.html">Engineering</a><a href="experience.html">Experience</a><a href="credentials.html">Credentials</a><a href="index.html#contact">Contact</a></div></nav></header><main id="main" class="wrap"><article class="case"><a class="back" href="index.html#work">← All projects</a><p class="eyebrow" style="margin-top:30px">Data & experiments / Research case study</p><h1>Machining experiment benchmark</h1><p class="lead">Connect machining parameters, experiment design, and audio analysis.</p><h2>Work completed</h2><p>Designed and curated a four-hour CNC audio dataset using DOE across feedrate and depth-of-cut parameters.</p><h2>My contribution</h2><p>Experiment design, dataset curation, and evaluation preparation.</p><p><strong>Tools & methods:</strong> DOE · Python · STFT · Statistics</p><h2>Public demo to build</h2><p>Publish a dataset card and an analysis notebook using permitted recordings or an explicitly synthetic demonstration dataset.</p><ol><li>Document factors, levels, run order, replication, and recording metadata.</li><li>Create a validation script for missing metadata, clipping, and inconsistent sample rates.</li><li>Plot time-domain and STFT features grouped by machining condition.</li><li>Use recording-level splits and report uncertainty rather than treating adjacent windows as independent experiments.</li></ol><h2>Evidence to show</h2><p>A dataset card, metadata schema, quality checks, and a reproducible notebook with interpretable plots.</p><div class="callout"><strong>Current evidence boundary</strong><p style="margin:8px 0 0">Avoid train/test leakage between windows from the same run. Four hours describes the original research dataset, not a supplied public download.</p></div><div class="actions"><a class="button" href="index.html#contact">Discuss this work ↗</a></div></article></main><footer class="wrap">Allen Moncey Varghese · Manufacturing engineering & applied ML</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4-hour CNC audio dataset by design of experiments | Allen Moncey Varghese</title>
+<meta name="description" content="A 4-hour CNC machining audio dataset designed with DOE across feed rate and depth of cut, used as a reproducible benchmark for machining digital-twin models.">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/machining-doe.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="4-hour CNC audio dataset by design of experiments | Allen Moncey Varghese">
+<meta property="og:description" content="A 4-hour CNC machining audio dataset designed with DOE across feed rate and depth of cut, used as a reproducible benchmark for machining digital-twin models.">
+<meta property="og:url" content="https://allenmoncey.github.io/machining-doe.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Design of experiments · Data</p>
+<h1>4-hour CNC audio dataset by design of experiments</h1>
+<p class="lead">A designed experiment varying feed rate and depth of cut to build a reproducible benchmark for machining digital-twin models.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Experiment design, data collection, curation</dd></div><div><dt>When</dt><dd>ASU research</dd></div><div><dt>Factors</dt><dd>Feed rate × depth of cut</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>Models for machining digital twins are hard to compare when everyone trains on ad-hoc recordings. A useful benchmark has to cover the operating range systematically and record exactly which conditions produced each signal.</p>
+<h2>Approach</h2>
+<ol class="flow">
+<li>Choose feed rate and depth of cut as the controlled factors and set their levels.</li>
+<li>Lay out the runs with design-of-experiments methodology.</li>
+<li>Record CNC audio for every run with its process parameters.</li>
+<li>Curate and label the recordings into a benchmark for model evaluation.</li>
+</ol>
+<h2>Results</h2>
+<div class="results"><div><strong>4 hours</strong><span>of labeled CNC audio</span></div><div><strong>2 factors</strong><span>feed rate and depth of cut, systematically varied</span></div></div>
+<p>The result is a reproducible, 4-hour benchmark dataset for evaluating machining digital-twin models across controlled cutting conditions.</p>
+<h2>My role</h2>
+<p>I designed the experiment, ran the data collection and curated the dataset.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Design of experiments</li><li>CNC machining</li><li>Audio acquisition</li><li>Python</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li data-code="machining-doe" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=4-hour%20CNC%20audio%20dataset%20by%20design%20of%20experiments">Ask me about this project</a></li></ul></div>
+
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="digital-twin.html">← Machining-center digital twin in Unreal Engine 5</a>
+<a href="seir-simulator.html">Multi-variant epidemic simulator →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

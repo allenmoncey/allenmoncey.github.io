@@ -1,1 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Allen Moncey Varghese — manufacturing engineering, machine learning, robotics, and digital twins."><title>CNC sensor compression | Allen Varghese</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="index.html">Allen M. Varghese<span style="color:var(--accent)">.</span></a><div class="navlinks"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="research.html">Research</a><a href="engineering.html">Engineering</a><a href="experience.html">Experience</a><a href="credentials.html">Credentials</a><a href="index.html#contact">Contact</a></div></nav></header><main id="main" class="wrap"><article class="case"><a class="back" href="index.html#work">← All projects</a><p class="eyebrow" style="margin-top:30px">Machine learning / Research case study</p><h1>CNC sensor compression</h1><p class="lead">Represent high-rate machining audio and vibration as discrete tokens for digital twin synchronization.</p><h2>Work completed</h2><p>Developed an FC-VQ-VAE for 22 kHz CNC audio and 10 kHz accelerometer streams. The resume reports approximately 25× compression and a machining-condition classifier using token features.</p><h2>My contribution</h2><p>Model development, sensor representation, and downstream classification.</p><p><strong>Tools & methods:</strong> Python · PyTorch · VQ-VAE · Signal processing</p><h2>Public demo to build</h2><p>Create a reproducible sensor-codec benchmark using data you can release. Compare an uncompressed representation, a conventional compression baseline, and the learned codec.</p><ol><li>Document sample rate, window length, channels, normalization, and train/test split by recording or experiment.</li><li>Implement a baseline and a small VQ-VAE; save training configuration and seeds.</li><li>Measure actual stored bytes including codebook and metadata; report reconstruction error and classification performance.</li><li>Publish waveform and spectrogram comparisons, a results table, and a short demo.</li></ol><h2>Evidence to show</h2><p>A runnable evaluation script, trained-demo instructions, compression accounting, and a held-out results table.</p><div class="callout"><strong>Current evidence boundary</strong><p style="margin:8px 0 0">The research compression figure is resume-reported. Do not present it as a reproduced public-demo result until measured with explicit byte accounting.</p></div><div class="actions"><a class="button" href="index.html#contact">Discuss this work ↗</a></div></article></main><footer class="wrap">Allen Moncey Varghese · Manufacturing engineering & applied ML</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sensor-token codec for real-time digital twins | Allen Moncey Varghese</title>
+<meta name="description" content="FC-VQ-VAE compresses high-frequency CNC audio and accelerometer streams about 25x into discrete tokens for real-time digital-twin synchronization. Published in Manufacturing Letters (2026).">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/sensor-codec.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="Sensor-token codec for real-time digital twins | Allen Moncey Varghese">
+<meta property="og:description" content="FC-VQ-VAE compresses high-frequency CNC audio and accelerometer streams about 25x into discrete tokens for real-time digital-twin synchronization. Published in Manufacturing Letters (2026).">
+<meta property="og:url" content="https://allenmoncey.github.io/sensor-codec.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Machine learning · Digital twins</p>
+<h1>Sensor-token codec for real-time digital twins</h1>
+<p class="lead">FC-VQ-VAE that turns 22 kHz CNC audio and 10 kHz vibration into discrete tokens a digital twin can stream.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2026, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 49 (2026)</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>A digital twin of a machine tool is only as current as the sensor data it receives. Machining audio is sampled at 22 kHz and accelerometers at 10 kHz, so streaming raw signals from many machines quickly exceeds the network bandwidth and edge hardware available on a shop floor. The twin falls behind the machine it is meant to mirror.</p>
+<h2>Approach</h2>
+<p>I developed the <strong>FC-VQ-VAE</strong>, a vector-quantized variational autoencoder for complex-valued sensor data. The encoder maps each window of signal onto entries in a learned codebook, so the stream sent to the twin is a short sequence of discrete token indices instead of raw samples. The decoder rebuilds the signal on the twin side.</p>
+<ol class="flow">
+<li>Capture synchronized CNC audio (22 kHz) and accelerometer (10 kHz) signals during machining.</li>
+<li>Encode signal windows into a compact latent space and quantize them against a learned codebook.</li>
+<li>Transmit only the token indices to the digital twin, within edge-hardware and bandwidth budgets.</li>
+<li>Reconstruct the signal from the tokens, and classify machining condition directly from the tokens.</li>
+</ol>
+<h2>Results</h2>
+<div class="results"><div><strong>~25×</strong><span>compression of the sensor stream</span></div><div><strong>2 sensors</strong><span>22 kHz audio + 10 kHz accelerometer</span></div><div><strong>Tokens → labels</strong><span>machining-condition classifier runs on the compressed codes</span></div></div>
+<p>The token stream was about 25 times smaller than the raw signal. A machining-condition classifier trained on the tokens alone showed that the compressed codes keep enough information for process monitoring and anomaly detection, so the twin can act on the data without first decompressing it.</p>
+<h2>My role</h2>
+<p>First author. I designed the architecture, built the training and evaluation pipeline, ran the experiments, built the downstream classifier and wrote the paper with my advisors, Dr. Binil Starly and Dr. Ashif Iquebal.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>VQ-VAE</li><li>Complex-valued networks</li><li>Signal processing</li><li>STFT</li><li>Edge deployment</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2026.08.060">Paper (DOI) ↗</a></li><li data-code="sensor-codec" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Sensor-token%20codec%20for%20real-time%20digital%20twins">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Cite</h3><p style="font-size:14px;margin:0"><cite>Varghese, A., Starly, B., &amp; Iquebal, A. (2026). Vector quantization of complex sensor data in limited network bandwidth and edge hardware constrained digital twins. <em>Manufacturing Letters</em>, 49, 1550–1561.</cite></p></div>
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="seir-simulator.html">← Multi-variant epidemic simulator</a>
+<a href="audio-autoencoder.html">Complex-valued autoencoder for machinery audio →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

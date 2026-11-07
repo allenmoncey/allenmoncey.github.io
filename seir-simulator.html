@@ -1,1 +1,73 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Allen Moncey Varghese — manufacturing engineering, machine learning, robotics, and digital twins."><title>Epidemic scenario simulator | Allen Varghese</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="index.html">Allen M. Varghese<span style="color:var(--accent)">.</span></a><div class="navlinks"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="research.html">Research</a><a href="engineering.html">Engineering</a><a href="experience.html">Experience</a><a href="credentials.html">Credentials</a><a href="index.html#contact">Contact</a></div></nav></header><main id="main" class="wrap"><article class="case"><a class="back" href="index.html#work">← All projects</a><p class="eyebrow" style="margin-top:30px">Data & experiments / Research case study</p><h1>Epidemic scenario simulator</h1><p class="lead">Explore multi-variant transmission, testing, and vaccination dynamics.</p><h2>Work completed</h2><p>Built a multi-variant SEIR simulator in MATLAB with testing and vaccination dynamics; the resume reports approximately 0.28 NMSE with AR(2) calibration.</p><h2>My contribution</h2><p>Simulation development, calibration, and validation visualization.</p><p><strong>Tools & methods:</strong> MATLAB · SEIR · Time series · Tableau</p><h2>Public demo to build</h2><p>Create a reproducible scenario explorer with synthetic inputs and a documented calibration example.</p><ol><li>Document equations, parameters, assumptions, and initial conditions.</li><li>Expose testing and vaccination scenarios; show parameter sensitivity.</li><li>Separate calibration and validation periods and report the error definition.</li><li>Export scenario curves and include a model-limitations section.</li></ol><h2>Evidence to show</h2><p>Runnable simulations, a parameter table, validation plots, and a scenario comparison.</p><div class="callout"><strong>Current evidence boundary</strong><p style="margin:8px 0 0">Label this as a modeling demonstration. Do not imply public-health forecasting accuracy from one resume-reported error value.</p></div><div class="actions"><a class="button" href="index.html#contact">Discuss this work ↗</a></div></article></main><footer class="wrap">Allen Moncey Varghese · Manufacturing engineering & applied ML</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-variant epidemic simulator | Allen Moncey Varghese</title>
+<meta name="description" content="A multi-variant SEIR epidemic simulator with testing and vaccination dynamics in MATLAB, calibrated for Delta and Omicron. Co-authored SIRTEM in ACM Transactions on Spatial Algorithms and Systems (2022).">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/seir-simulator.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="Multi-variant epidemic simulator | Allen Moncey Varghese">
+<meta property="og:description" content="A multi-variant SEIR epidemic simulator with testing and vaccination dynamics in MATLAB, calibrated for Delta and Omicron. Co-authored SIRTEM in ACM Transactions on Spatial Algorithms and Systems (2022).">
+<meta property="og:url" content="https://allenmoncey.github.io/seir-simulator.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Simulation · Statistics</p>
+<h1>Multi-variant epidemic simulator</h1>
+<p class="lead">SEIR model with testing and vaccination for Delta and Omicron, calibrated to data; co-authored SIRTEM in ACM TSAS.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Model development, calibration, analytics</dd></div><div><dt>When</dt><dd>Dec 2020 – Jul 2022, ASU</dd></div><div><dt>Advisor</dt><dd>Dr. Giulia Pedrielli</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>During COVID-19, decision makers needed to see how testing and vaccination policies would play out when several variants circulated at once. The same skills apply directly to production systems: simulating a stochastic process, calibrating it to data and testing what-if scenarios.</p>
+<h2>Approach</h2>
+<ol class="flow">
+<li>Build a multi-variant SEIR model with testing and vaccination dynamics as delay differential equations in MATLAB (dde23).</li>
+<li>Calibrate the model to observed data with an AR(2) correction.</li>
+<li>Clean data and validate the model visually through Tableau pipelines.</li>
+</ol>
+<h2>Results</h2>
+<div class="results"><div><strong>≈ 0.28</strong><span>NMSE for Delta and Omicron</span></div><div><strong>ACM TSAS</strong><span>peer-reviewed journal, 2022</span></div><div><strong>M.S. thesis</strong><span>multi-variant spatially informed testing</span></div></div>
+<p>The calibrated model reached an NMSE of about 0.28 for the Omicron and Delta variants. This work fed into SIRTEM, published in ACM Transactions on Spatial Algorithms and Systems, and my M.S. thesis.</p>
+<h2>My role</h2>
+<p>I built the simulator, the calibration and the data pipelines, and co-authored the journal paper.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>MATLAB</li><li>Delay differential equations</li><li>Time-series calibration</li><li>Tableau</li><li>Stochastic simulation</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1145/3555310">Paper (DOI) ↗</a></li><li data-code="seir-simulator" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Multi-variant%20epidemic%20simulator">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Cite</h3><p style="font-size:14px;margin:0"><cite>Azad, F. T., Dodge, R. W., Varghese, A. M., Lee, J., Pedrielli, G., Candan, K. S., &amp; Chowell-Puente, G. (2022). SIRTEM: Spatially informed rapid testing for epidemic modeling and response to COVID-19. <em>ACM Transactions on Spatial Algorithms and Systems</em>, 8(4), 1–43.</cite></p></div>
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="machining-doe.html">← 4-hour CNC audio dataset by design of experiments</a>
+<a href="sensor-codec.html">Sensor-token codec for real-time digital twins →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

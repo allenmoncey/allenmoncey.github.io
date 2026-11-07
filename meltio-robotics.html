@@ -1,1 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Allen Moncey Varghese — manufacturing engineering, machine learning, robotics, and digital twins."><title>Robotic metal printing | Allen Varghese</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="index.html">Allen M. Varghese<span style="color:var(--accent)">.</span></a><div class="navlinks"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="research.html">Research</a><a href="engineering.html">Engineering</a><a href="experience.html">Experience</a><a href="credentials.html">Credentials</a><a href="index.html#contact">Contact</a></div></nav></header><main id="main" class="wrap"><article class="case"><a class="back" href="index.html#work">← All projects</a><p class="eyebrow" style="margin-top:30px">Robotics / Research case study</p><h1>Robotic metal printing</h1><p class="lead">Hands-on programming, printing, and troubleshooting with a robot-mounted Meltio system.</p><h2>Work completed</h2><p>Programmed and operated a Meltio metal 3D printing system affixed to a robot arm; diagnosed and resolved software and robot issues during printing research.</p><h2>My contribution</h2><p>Robot programming, print execution, and software/robot troubleshooting.</p><p><strong>Tools & methods:</strong> Meltio · Robot programming · Root cause analysis</p><h2>Public demo to build</h2><p>Create an engineering case study and an offline print-run log analyzer. Add actual robot model, software, and fault details when confirmed.</p><ol><li>Select one real issue; record symptom, operating context, hypotheses, diagnostic checks, fix, and verification.</li><li>Add permitted photographs, a short print video, and an annotated workflow diagram.</li><li>Create a CSV log schema and an offline parser that plots print events and flags interruptions.</li><li>Write a commissioning and repeatability checklist based on work you actually performed.</li></ol><h2>Evidence to show</h2><p>A documented troubleshooting case, before/after evidence, a print artifact, and an offline log-analysis demo.</p><div class="callout"><strong>Current evidence boundary</strong><p style="margin:8px 0 0">Do not claim a particular robot brand, software, material, safety certification, or measured improvement without evidence. Keep public code offline rather than issuing robot commands.</p></div><div class="actions"><a class="button" href="index.html#contact">Discuss this work ↗</a></div></article></main><footer class="wrap">Allen Moncey Varghese · Manufacturing engineering & applied ML</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Robotic wire-laser metal DED cell | Allen Moncey Varghese</title>
+<meta name="description" content="Metal additive manufacturing research on a robotic wire-laser directed energy deposition cell: a Meltio head on a FANUC R-1000iA/80F robot with a 2-axis positioner.">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/meltio-robotics.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="Robotic wire-laser metal DED cell | Allen Moncey Varghese">
+<meta property="og:description" content="Metal additive manufacturing research on a robotic wire-laser directed energy deposition cell: a Meltio head on a FANUC R-1000iA/80F robot with a 2-axis positioner.">
+<meta property="og:url" content="https://allenmoncey.github.io/meltio-robotics.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Metal additive manufacturing · Robotics</p>
+<h1>Robotic wire-laser metal DED cell</h1>
+<p class="lead">Metal additive manufacturing research on a Meltio wire-laser head mounted on a FANUC R-1000iA/80F with a 2-axis positioner.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Researcher and cell operator</dd></div><div><dt>Where</dt><dd>ASU manufacturing lab</dd></div><div><dt>Process</dt><dd>Wire-laser directed energy deposition</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>Robotic directed energy deposition (DED) can print and repair large metal parts, but only if the deposition head, the robot and the positioner behave as one machine. In a research cell built from separate vendors&rsquo; equipment, faults at the boundaries between them stop builds and take the cell out of service.</p>
+<h2>Approach</h2>
+<p>I run metal additive manufacturing research on a wire-laser DED cell:</p>
+<ul>
+<li><strong>Deposition head:</strong> Meltio wire-laser metal head.</li>
+<li><strong>Robot:</strong> FANUC R-1000iA/80F six-axis industrial robot.</li>
+<li><strong>Positioner:</strong> 2-axis (tilt and rotate) servo positioner for part orientation.</li>
+</ul>
+<p>When builds failed, I traced the faults to the integration between the Meltio software and the robot controller, isolated the cause and fixed it, so the cell could keep running experiments.</p>
+<h2>Results</h2>
+<div class="results"><div><strong>6 + 2 axes</strong><span>robot plus positioner</span></div><div><strong>Back in service</strong><span>integration faults diagnosed and fixed</span></div></div>
+<p>I diagnosed and fixed the integration faults between the deposition software and the robot controller, which kept the cell available for experimental builds.</p>
+<h2>My role</h2>
+<p>Hands-on operator and troubleshooter: preparing and running builds, diagnosing software and robot faults, and fixing them.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Meltio wire-laser DED</li><li>FANUC R-1000iA/80F</li><li>2-axis positioner</li><li>Robot–software integration</li><li>Root cause analysis</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li data-code="meltio-robotics" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Robotic%20wire-laser%20metal%20DED%20cell">Ask me about this project</a></li></ul></div>
+
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="audio-autoencoder.html">← Complex-valued autoencoder for machinery audio</a>
+<a href="tooth-inspection.html">Bandsaw tooth inspection with M.K. Morse →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

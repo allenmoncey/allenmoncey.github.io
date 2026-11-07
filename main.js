@@ -1,1 +1,24 @@
-document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{const filter=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;document.querySelectorAll('[data-category]').forEach(card=>{card.hidden=filter!=='All'&&card.dataset.category!==filter;if(!card.hidden)count++});document.getElementById('filter-status').textContent=filter==='All'?`Showing all ${count} projects.`:`Showing ${count} project${count===1?'':'s'} in ${filter}.`;}));
+(function () {
+  var btn = document.querySelector('.menu-btn');
+  var nav = document.getElementById('navlinks');
+  if (btn && nav) {
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { nav.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+  var links = window.PROJECT_LINKS || {};
+  document.querySelectorAll('[data-code]').forEach(function (el) {
+    var url = links[el.getAttribute('data-code')];
+    if (url) {
+      var a = el.querySelector('a');
+      a.href = url;
+      el.hidden = false;
+    }
+  });
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+})();

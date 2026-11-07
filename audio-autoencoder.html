@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Complex-valued autoencoder for machinery audio | Allen Moncey Varghese</title>
+<meta name="description" content="A complex-valued convolutional autoencoder that reconstructs and generates CNC machinery audio from complex STFT inputs. Published in Manufacturing Letters (2025).">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/audio-autoencoder.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="Complex-valued autoencoder for machinery audio | Allen Moncey Varghese">
+<meta property="og:description" content="A complex-valued convolutional autoencoder that reconstructs and generates CNC machinery audio from complex STFT inputs. Published in Manufacturing Letters (2025).">
+<meta property="og:url" content="https://allenmoncey.github.io/audio-autoencoder.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Generative models · Audio</p>
+<h1>Complex-valued autoencoder for machinery audio</h1>
+<p class="lead">Generates realistic CNC machine sound from complex STFT inputs for virtual factories and VR operator training.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2025, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 44 (2025)</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>Virtual factories and VR operator-training environments feel convincing only when the machines sound right. The sound of a cut carries real process information, and recorded clips cannot cover every combination of tool, material and cutting parameter, so the audio needs to be generated.</p>
+<h2>Approach</h2>
+<p>I designed a <strong>complex-valued convolutional autoencoder</strong> that works directly on the complex short-time Fourier transform (STFT) of machine audio. Keeping the real and imaginary parts together lets the network model magnitude and phase jointly, which is what audio needs to sound natural once it is converted back to a waveform.</p>
+<ol class="flow">
+<li>Convert CNC machining audio into complex STFT representations.</li>
+<li>Encode with complex-valued convolution layers into a compact latent representation.</li>
+<li>Decode back to a complex spectrogram and invert to audio.</li>
+<li>Evaluate reconstruction error and listen to generated audio for use in simulation.</li>
+</ol>
+<h2>Results</h2>
+<div class="results"><div><strong>≈ 0.20</strong><span>reconstruction MSE</span></div><div><strong>NAMRC 53</strong><span>presented; NSF travel award</span></div></div>
+<p>The model reached a reconstruction MSE of about 0.20 and produced high-fidelity machining audio suitable for virtual-factory and VR training environments. The work was presented at NAMRC 53, where I received an NSF travel award.</p>
+<h2>My role</h2>
+<p>First author. I built the model, the data pipeline and the experiments, and wrote the paper with Dr. Binil Starly and Dr. Ashif Iquebal.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>PyTorch</li><li>Complex-valued CNNs</li><li>Complex STFT</li><li>Audio DSP</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li><a href="https://doi.org/10.1016/j.mfglet.2025.06.166">Paper (DOI) ↗</a></li><li data-code="audio-autoencoder" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Complex-valued%20autoencoder%20for%20machinery%20audio">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Cite</h3><p style="font-size:14px;margin:0"><cite>Varghese, A., Starly, B., &amp; Iquebal, A. (2025). Complex value autoencoder for machinery audio generation. <em>Manufacturing Letters</em>, 44, 1468–1478.</cite></p></div>
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="sensor-codec.html">← Sensor-token codec for real-time digital twins</a>
+<a href="meltio-robotics.html">Robotic wire-laser metal DED cell →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

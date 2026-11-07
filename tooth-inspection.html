@@ -1,1 +1,74 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Allen Moncey Varghese — manufacturing engineering, machine learning, robotics, and digital twins."><title>Bandsaw tooth inspection | Allen Varghese</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="index.html">Allen M. Varghese<span style="color:var(--accent)">.</span></a><div class="navlinks"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="research.html">Research</a><a href="engineering.html">Engineering</a><a href="experience.html">Experience</a><a href="credentials.html">Credentials</a><a href="index.html#contact">Contact</a></div></nav></header><main id="main" class="wrap"><article class="case"><a class="back" href="index.html#work">← All projects</a><p class="eyebrow" style="margin-top:30px">Computer vision / Research case study</p><h1>Bandsaw tooth inspection</h1><p class="lead">Turn tooth profiles into quantitative wear measurements.</p><h2>Work completed</h2><p>Developed a profile-contour inspection pipeline and quantitative wear metric in research with M.K. Morse Co.</p><h2>My contribution</h2><p>Inspection pipeline development and geometric wear measurement.</p><p><strong>Tools & methods:</strong> Python · Computer vision · Contours · Metrology</p><h2>Public demo to build</h2><p>Build an image-to-wear report on your own sample images or clearly labeled synthetic tooth profiles.</p><ol><li>Define the wear metric and its units; document image scale and reference geometry.</li><li>Implement segmentation, contour extraction, alignment, and metric calculation.</li><li>Evaluate against manually annotated profiles; test lighting, rotation, and noise.</li><li>Export an annotated image and CSV report with confidence or failure flags.</li></ol><h2>Evidence to show</h2><p>Before/after overlays, a labeled evaluation set, measurement error, and a downloadable sample report.</p><div class="callout"><strong>Current evidence boundary</strong><p style="margin:8px 0 0">Get permission before publishing partner images or code. Synthetic profiles demonstrate the pipeline, not industrial validation.</p></div><div class="actions"><a class="button" href="index.html#contact">Discuss this work ↗</a></div></article></main><footer class="wrap">Allen Moncey Varghese · Manufacturing engineering & applied ML</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bandsaw tooth inspection with M.K. Morse | Allen Moncey Varghese</title>
+<meta name="description" content="An automated computer-vision pipeline for bandsaw tooth-quality inspection, built with industry partner M.K. Morse Co., using profile-contour extraction and a quantitative wear metric.">
+<meta name="author" content="Allen Moncey Varghese">
+<link rel="canonical" href="https://allenmoncey.github.io/tooth-inspection.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Allen Moncey Varghese">
+<meta property="og:title" content="Bandsaw tooth inspection with M.K. Morse | Allen Moncey Varghese">
+<meta property="og:description" content="An automated computer-vision pipeline for bandsaw tooth-quality inspection, built with industry partner M.K. Morse Co., using profile-contour extraction and a quantitative wear metric.">
+<meta property="og:url" content="https://allenmoncey.github.io/tooth-inspection.html">
+<meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Main">
+<a class="brand" href="index.html">Allen M. Varghese<span>.</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<ul class="navlinks" id="navlinks"><li><a href="index.html" aria-current="page">Work</a></li><li><a href="about.html">About</a></li><li><a href="index.html#publications">Publications</a></li><li><a href="resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</nav>
+</header>
+<main id="main" class="wrap">
+<p class="crumb"><a href="index.html#work">← All projects</a></p>
+<header class="case-head">
+<p class="eyebrow">Computer vision · Quality</p>
+<h1>Bandsaw tooth inspection with M.K. Morse</h1>
+<p class="lead">Automated vision inspection that measures tooth wear from profile contours, built with industry partner M.K. Morse Co.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Pipeline design and development</dd></div><div><dt>Partner</dt><dd>M.K. Morse Co.</dd></div><div><dt>When</dt><dd>ASU research, 2023 –</dd></div></dl>
+</header>
+<div class="case-body">
+<article>
+<h2>The problem</h2>
+<p>Bandsaw blade quality depends on tooth geometry, and checking it by eye is slow, subjective and hard to scale across production. M.K. Morse wanted an objective, repeatable measure of tooth condition.</p>
+<h2>Approach</h2>
+<ol class="flow">
+<li>Image the blade teeth.</li>
+<li>Extract each tooth&rsquo;s profile contour from the image.</li>
+<li>Compare profiles to compute a quantitative wear metric.</li>
+<li>Flag defective or worn teeth automatically.</li>
+</ol>
+<h2>Results</h2>
+<div class="results"><div><strong>Objective</strong><span>quantitative wear metric replaces visual judgment</span></div><div><strong>Scalable</strong><span>automated pipeline instead of manual inspection</span></div></div>
+<p>The system replaced manual inspection with an automated, scalable vision pipeline built around a quantitative wear metric.</p>
+<h2>My role</h2>
+<p>I designed and built the defect-detection pipeline, from contour extraction to the wear metric, working with the industry partner.</p>
+</article>
+<aside class="side" aria-label="Project details">
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>Contour extraction</li><li>Image segmentation</li><li>Defect detection</li><li>Metrology</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li data-code="tooth-inspection" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Bandsaw%20tooth%20inspection%20with%20M.K.%20Morse">Ask me about this project</a></li></ul></div>
+
+</aside>
+</div>
+<nav class="next" aria-label="More projects">
+<a href="meltio-robotics.html">← Robotic wire-laser metal DED cell</a>
+<a href="digital-twin.html">Machining-center digital twin in Unreal Engine 5 →</a>
+</nav>
+</main>
+<footer class="site-footer">
+<div class="wrap"><span>&copy; <span id="year">2026</span> Allen Moncey Varghese</span><span><a href="mailto:allen.moncey@gmail.com">allen.moncey@gmail.com</a> · <a href="https://www.linkedin.com/in/allen-moncey-varghese-35aa01119" rel="me">LinkedIn</a> · <a href="https://github.com/allenmoncey" rel="me">GitHub</a></span></div>
+</footer>
+<script src="links.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
