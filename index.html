@@ -46,17 +46,17 @@
 <p class="eyebrow">At a glance</p>
 <dl>
 <div><dt>Now</dt><dd>PhD, Manufacturing Engineering, Arizona State University (4.0 GPA, expected 2027)</dd></div>
-<div><dt>Focus</dt><dd>Machine sensor ML · Digital twins · Vision inspection · Metal DED</dd></div>
+<div><dt>Focus</dt><dd>AI for machine sensor data · Digital twins · Vision inspection · Metal 3D printing (DED)</dd></div>
 <div><dt>Before</dt><dd>MS Industrial Engineering (ASU) · BTech Mechanical (VIT) · Production &amp; operations engineer</dd></div>
 <div><dt>Looking for</dt><dd>Full-time roles from 2027, US-wide</dd></div>
 </dl>
 </aside>
 </section>
 <div class="stats" role="list" aria-label="Highlights">
-<div class="stat" role="listitem"><strong>1 → 22 kHz</strong><span>machine audio rebuilt from low-cost sensors for digital twins</span></div>
-<div class="stat" role="listitem"><strong>2</strong><span>first-author papers, Manufacturing Letters 2025 &amp; 2026</span></div>
-<div class="stat" role="listitem"><strong>25%</strong><span>production cycle-time cut across 15 projects</span></div>
-<div class="stat" role="listitem"><strong>95%</strong><span>on-time delivery in production</span></div>
+<div class="stat" role="listitem"><strong>22×</strong><span>less data per sensor: my AI model rebuilds full 22 kHz machine audio from a low-cost 1 kHz sensor</span></div>
+<div class="stat" role="listitem"><strong>2</strong><span>first-author, peer-reviewed papers in <em>Manufacturing Letters</em> (2025 &amp; 2026)</span></div>
+<div class="stat" role="listitem"><strong>25%</strong><span>shorter production cycle time across 15 projects, with 95% on-time delivery</span></div>
+<div class="stat" role="listitem"><strong>3</strong><span>conference talks at NAMRC 2025–26, one with industry partner M.K. Morse</span></div>
 </div>
 </div>
 
@@ -67,39 +67,39 @@
 </div>
 <div class="grid"><article class="card wide">
 <span class="tag">Machine learning · Digital twins</span>
-<h3><a href="sensor-codec.html">Sensor-token codec for real-time digital twins</a></h3>
-<p>A VQ-VAE framework that sends machine audio to a digital twin as discrete codebook tokens, and rebuilds 22.05 kHz signals from low-cost 1 kHz sensors.</p>
-<p class="result">37.8 dB PSNR · 1 kHz → 22.05 kHz · Manufacturing Letters 2026</p>
+<h3><a href="sensor-codec.html">AI sensor compression for digital twins</a></h3>
+<p>An AI model that shrinks machine sound data so a digital twin can receive it in real time, and lets low-cost sensors stand in for high-end ones.</p>
+<p class="result">High-fidelity audio from low-cost sensors · 2026 paper</p>
 </article><article class="card">
 <span class="tag">Generative models · Audio</span>
 <h3><a href="audio-autoencoder.html">Complex-valued autoencoder for machinery audio</a></h3>
-<p>Generates CNC machine sound from complex STFT inputs so virtual factories and VR training can sound like the real machine.</p>
-<p class="result">Reconstruction MSE 8×10⁻⁴ · Manufacturing Letters 2025</p>
+<p>A neural network that learns to rebuild CNC machine sound, so virtual factories and VR training can sound like the real machine.</p>
+<p class="result">Near-exact sound reconstruction · 2025 paper</p>
 </article><article class="card wide">
 <span class="tag">Metal additive manufacturing · Robotics</span>
 <h3><a href="meltio-robotics.html">Robotic wire-laser metal DED cell</a></h3>
-<p>Metal additive manufacturing research on a Meltio wire-laser head mounted on a FANUC R-1000iA/80F with a 2-axis positioner.</p>
-<p class="result">Fixed software–robot integration faults</p>
+<p>Metal 3D printing research on an industrial robot cell: a Meltio wire-laser head on a FANUC R-1000iA/80F robot with a 2-axis positioner.</p>
+<p class="result">Software–robot faults fixed; cell back in service</p>
 </article><article class="card">
 <span class="tag">Computer vision · Quality</span>
 <h3><a href="tooth-inspection.html">Vision inspection of bandsaw teeth with M.K. Morse</a></h3>
-<p>Machine-vision inspection that extracts each tooth&rsquo;s front-edge profile and flags defective teeth on a Hotelling T² control chart. Presented at NAMRC 53 with M.K. Morse.</p>
-<p class="result">38 teeth scored · T² control chart · NAMRC 53</p>
+<p>Camera-based inspection that measures each saw tooth&rsquo;s front edge and flags defective teeth on a statistical control chart. Built with M.K. Morse; presented at NAMRC 53.</p>
+<p class="result">Good vs defective teeth separated · NAMRC 53</p>
 </article><article class="card">
 <span class="tag">Digital twins · VR</span>
 <h3><a href="digital-twin.html">Machining-center digital twin in Unreal Engine 5</a></h3>
-<p>CAD models of machining centers brought into Unreal Engine 5.1 for real-time digital-twin experiments and VR tool-failure scenarios.</p>
-<p class="result">VR tool-failure simulation</p>
+<p>3D models of machining centers brought into Unreal Engine 5.1 for virtual-reality tool-failure scenarios.</p>
+<p class="result">Tool failures studied safely in VR</p>
 </article><article class="card">
 <span class="tag">Design of experiments · Data</span>
 <h3><a href="machining-doe.html">4-hour CNC audio dataset by design of experiments</a></h3>
-<p>A 3 × 3 factorial experiment on a desktop CNC mill, spindle speed × feed per tooth, recorded at 22.05 kHz. It is the benchmark behind both of my papers.</p>
-<p class="result">9 conditions × 2 replicates · ~4 hours</p>
+<p>A designed experiment on a desktop CNC mill, varying spindle speed and feed rate, that produced the 4-hour audio dataset behind both of my papers.</p>
+<p class="result">4 hours of labeled audio · used in both papers</p>
 </article><article class="card">
 <span class="tag">Simulation · Statistics</span>
 <h3><a href="seir-simulator.html">Multi-variant epidemic simulator</a></h3>
-<p>SEIR model with testing and vaccination for Delta and Omicron, calibrated to data; co-authored SIRTEM in ACM TSAS.</p>
-<p class="result">NMSE ≈ 0.28 · ACM TSAS 2022</p>
+<p>An epidemic simulator for multiple COVID-19 variants with testing and vaccination, calibrated to reported data.</p>
+<p class="result">Error ≈ 0.28 · ACM journal paper 2022</p>
 </article></div>
 </section>
 

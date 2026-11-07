@@ -34,7 +34,8 @@
 <header class="case-head">
 <p class="eyebrow">Design of experiments · Data</p>
 <h1>4-hour CNC audio dataset by design of experiments</h1>
-<p class="lead">A 3 × 3 factorial experiment on a desktop CNC mill, spindle speed × feed per tooth, recorded at 22.05 kHz. It is the benchmark behind both of my papers.</p>
+<p class="lead">A designed experiment on a desktop CNC mill, varying spindle speed and feed rate, that produced the 4-hour audio dataset behind both of my papers.</p>
+<dl class="tldr"><div><dt>Problem</dt><dd>Machine-sound AI is hard to train and compare without audio recorded under known, controlled conditions.</dd></div><div><dt>What I built</dt><dd>A designed experiment on a desktop CNC mill: 3 spindle speeds × 3 feed rates, each run twice, recorded at 22 kHz.</dd></div><div><dt>Result</dt><dd>About 4 hours of labeled machining audio, roughly 30 minutes per condition.</dd></div><div><dt>Why it matters</dt><dd>It is the training and test data behind both of my published models.</dd></div></dl>
 <dl class="case-meta"><div><dt>Role</dt><dd>Experiment design, data collection, curation</dd></div><div><dt>Machine</dt><dd>Pocket NC V2-10 desktop CNC</dd></div><div><dt>Factors</dt><dd>Spindle speed × feed per tooth</dd></div></dl>
 </header>
 <div class="case-body">
@@ -45,7 +46,7 @@
 <ul>
 <li><strong>Process:</strong> facing operations on wood blocks with a Datron single-flute end mill (1/8 in shank) on a Pocket NC V2-10 desktop CNC.</li>
 <li><strong>Sensing:</strong> a Boya BY-M1 condenser microphone mounted inside the machine&rsquo;s protective cover, recording at 22.05 kHz.</li>
-<li><strong>Factors:</strong> spindle speed at 5,500, 7,000 and 8,500 RPM, and feed per tooth at 0.0006, 0.0008 and 0.001 in.</li>
+<li><strong>Factors:</strong> spindle speed at 5,500, 7,000 and 8,500 RPM, and feed per tooth (how far the tool advances per cutting edge) at 0.0006, 0.0008 and 0.001 in.</li>
 <li><strong>Held constant:</strong> step-down (0.082 in) and step-over (0.070 in), which made little audible difference when varied.</li>
 <li><strong>Design:</strong> full 3 × 3 factorial, nine conditions, each run twice.</li>
 </ul>

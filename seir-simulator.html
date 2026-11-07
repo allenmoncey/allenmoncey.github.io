@@ -34,7 +34,8 @@
 <header class="case-head">
 <p class="eyebrow">Simulation · Statistics</p>
 <h1>Multi-variant epidemic simulator</h1>
-<p class="lead">SEIR model with testing and vaccination for Delta and Omicron, calibrated to data; co-authored SIRTEM in ACM TSAS.</p>
+<p class="lead">An epidemic simulator for multiple COVID-19 variants with testing and vaccination, calibrated to reported data.</p>
+<dl class="tldr"><div><dt>Problem</dt><dd>Decision makers needed to see how testing and vaccination would play out with several COVID-19 variants circulating.</dd></div><div><dt>What I built</dt><dd>A multi-variant epidemic simulator in MATLAB, calibrated to reported data.</dd></div><div><dt>Result</dt><dd>Normalized error of about 0.28 for Delta and Omicron; co-authored a peer-reviewed journal paper (ACM TSAS, 2022).</dd></div><div><dt>Why it matters</dt><dd>The same skills apply to production systems: simulate a process, calibrate it to data and test what-if scenarios.</dd></div></dl>
 <dl class="case-meta"><div><dt>Role</dt><dd>Model development, calibration, analytics</dd></div><div><dt>When</dt><dd>Dec 2020 – Jul 2022, ASU</dd></div><div><dt>Advisor</dt><dd>Dr. Giulia Pedrielli</dd></div></dl>
 </header>
 <div class="case-body">
@@ -43,13 +44,13 @@
 <p>During COVID-19, decision makers needed to see how testing and vaccination policies would play out when several variants circulated at once. The same skills apply directly to production systems: simulating a stochastic process, calibrating it to data and testing what-if scenarios.</p>
 <h2>Approach</h2>
 <ol class="flow">
-<li>Build a multi-variant SEIR model with testing and vaccination dynamics as delay differential equations in MATLAB (dde23).</li>
-<li>Calibrate the model to observed data with an AR(2) correction.</li>
-<li>Clean data and validate the model visually through Tableau pipelines.</li>
+<li>Model each variant with an SEIR structure (people move from susceptible to exposed, infected and recovered), add testing and vaccination, and solve it as delay differential equations in MATLAB.</li>
+<li>Calibrate the model to reported data with an autoregressive correction.</li>
+<li>Clean the data and check the fit visually with Tableau dashboards.</li>
 </ol>
 <h2>Results</h2>
-<div class="results"><div><strong>≈ 0.28</strong><span>NMSE for Delta and Omicron</span></div><div><strong>ACM TSAS</strong><span>peer-reviewed journal, 2022</span></div><div><strong>M.S. thesis</strong><span>multi-variant spatially informed testing</span></div></div>
-<p>The calibrated model reached an NMSE of about 0.28 for the Omicron and Delta variants. This work fed into SIRTEM, published in ACM Transactions on Spatial Algorithms and Systems, and my M.S. thesis.</p>
+<div class="results"><div><strong>≈ 0.28</strong><span>normalized error against reported data, Delta and Omicron</span></div><div><strong>ACM TSAS</strong><span>peer-reviewed journal, 2022</span></div><div><strong>M.S. thesis</strong><span>multi-variant testing model</span></div></div>
+<p>The calibrated model reached a normalized error of about 0.28 against reported data for the Omicron and Delta variants. This work fed into SIRTEM, published in ACM Transactions on Spatial Algorithms and Systems, and my M.S. thesis.</p>
 
 <h2>My role</h2>
 <p>I built the simulator, the calibration and the data pipelines, and co-authored the journal paper.</p>
@@ -62,7 +63,7 @@
 </div>
 <nav class="next" aria-label="More projects">
 <a href="machining-doe.html">← 4-hour CNC audio dataset by design of experiments</a>
-<a href="sensor-codec.html">Sensor-token codec for real-time digital twins →</a>
+<a href="sensor-codec.html">AI sensor compression for digital twins →</a>
 </nav>
 </main>
 <footer class="site-footer">

@@ -34,7 +34,8 @@
 <header class="case-head">
 <p class="eyebrow">Generative models · Audio</p>
 <h1>Complex-valued autoencoder for machinery audio</h1>
-<p class="lead">Generates CNC machine sound from complex STFT inputs so virtual factories and VR training can sound like the real machine.</p>
+<p class="lead">A neural network that learns to rebuild CNC machine sound, so virtual factories and VR training can sound like the real machine.</p>
+<dl class="tldr"><div><dt>Problem</dt><dd>Virtual factories and VR training show machines but rarely sound like them, and there is little machine audio to train AI on.</dd></div><div><dt>What I built</dt><dd>A neural network that learns to compress and rebuild machining sound, keeping both its loudness and phase.</dd></div><div><dt>Result</dt><dd>Rebuilt recorded machining sound almost exactly after 6 hours of training on 4 hours of audio.</dd></div><div><dt>Why it matters</dt><dd>A first step toward generating realistic machine sound for operator training and sound-based fault spotting. Peer-reviewed in <em>Manufacturing Letters</em> (2025).</dd></div></dl>
 <dl class="case-meta"><div><dt>Role</dt><dd>First author; model design, training, evaluation</dd></div><div><dt>When</dt><dd>2023 – 2025, ASU</dd></div><div><dt>Published</dt><dd>Manufacturing Letters 44 (2025), NAMRC 53</dd></div></dl>
 </header>
 <div class="case-body">
@@ -42,17 +43,17 @@
 <h2>The problem</h2>
 <p>Virtual factories already use cameras, thermal sensors and vibration data, but almost none use sound, even though machinists and monitoring systems rely on it to catch tool wear and spindle problems early. Generating realistic machine audio for each process condition would let a virtual factory or VR trainer sound like the real shop floor. Unlike speech and music, though, there is very little machinery audio to train on, so the model has to learn from a small dataset.</p>
 <h2>Approach</h2>
-<p>I designed a <strong>convolutional autoencoder that works on the complex short-time Fourier transform (STFT)</strong> of machine audio. The real and imaginary parts of the STFT go in as two channels, so the network learns magnitude and phase together and the output can be inverted straight back to a waveform.</p>
+<p>I designed an <strong>autoencoder</strong>, a neural network that compresses data and then rebuilds it. It works on the sound&rsquo;s <strong>short-time Fourier transform (STFT)</strong>, a time–frequency picture of the audio made of complex numbers. Feeding the real and imaginary parts in as two channels lets the network learn loudness and phase together, so its output converts straight back to sound.</p>
 <ol class="flow">
-<li>Convert a 0.74-second audio clip to its STFT and split it into real and imaginary components (257 × 128 × 2).</li>
-<li>Encode with 2D convolution layers and SiLU activations; decode with transposed convolutions.</li>
-<li>Split the output back into real and imaginary parts and apply the inverse STFT to get audio.</li>
-<li>Compare real and decoded audio in the time and frequency domains. A second decoder with residual connections extends a 0.74-second clip to 1.48 seconds.</li>
+<li>Cut the recording into 0.74-second clips and compute each clip&rsquo;s STFT.</li>
+<li>Compress and rebuild it with 2D convolution layers.</li>
+<li>Convert the rebuilt STFT back into audio.</li>
+<li>Compare real and rebuilt audio in time and frequency.</li>
 </ol>
-<p>Training used the 4-hour designed CNC audio dataset (<a href="machining-doe.html">see the dataset project</a>) on an NVIDIA RTX A6000 workstation.</p>
+<p>Training used my <a href="machining-doe.html">4-hour CNC audio dataset</a> on an NVIDIA RTX A6000 workstation.</p>
 <h2>Results</h2>
-<div class="results"><div><strong>8 × 10⁻⁴</strong><span>mean squared error reconstructing audio (1,000 clips)</span></div><div><strong>≈ 0.20</strong><span>mean squared error of generated audio (20 clips)</span></div><div><strong>6 hours</strong><span>training time; about 4–5 hours to retrain</span></div><div><strong>0.74 → 1.48 s</strong><span>audio extended by the residual decoder</span></div></div>
-<p>The base model reconstructed machine audio with a mean squared error of 8 × 10⁻⁴, and most of the frequencies in the real recordings were reproduced in the decoded audio. Generated audio reached a mean squared error of about 0.20. The residual decoder, trained for 24 hours, lowered that to about 0.11 while doubling the clip length. The model needs little data and short training, though it is not yet fast enough for real-time use. I presented the work at NAMRC 53, where I received an NSF travel award.</p>
+<div class="results"><div><strong>8 × 10⁻⁴</strong><span>error rebuilding recorded audio (mean squared error, 1,000 clips)</span></div><div><strong>≈ 0.20</strong><span>error of newly generated audio (20 clips)</span></div><div><strong>6 hours</strong><span>to train; about 4–5 hours to retrain</span></div><div><strong>0.74 → 1.48 s</strong><span>clip length doubled by a second decoder</span></div></div>
+<p>The rebuilt audio reproduced most of the frequencies in the real recordings. A second decoder with skip connections doubled the clip length and lowered the generated-audio error to about 0.11 after 24 hours of training. The model needs little data, but it is not yet fast enough for real-time use. I presented the work at NAMRC 53 with an NSF travel award.</p>
 <h2>Figures</h2><figure class="fig"><a href="images/audio-real-vs-decoded.png"><img src="images/audio-real-vs-decoded.png" width="1600" height="393" alt="Overlay of real and decoded audio waveforms over 10 ms, and FFTs of real and decoded audio." loading="lazy" decoding="async"></a><figcaption>Real vs decoded audio in time and frequency. Slide from Varghese, Starly &amp; Iquebal, NAMRC 53 presentation (2025).</figcaption></figure><figure class="fig"><a href="images/audio-complex-ae-training.png"><img src="images/audio-complex-ae-training.png" width="1600" height="532" alt="Pipeline: waveform to STFT, split into real and imaginary components, concatenated, passed through encoder and decoder, split again and inverted to a decoded waveform." loading="lazy" decoding="async"></a><figcaption>Training pipeline: the STFT's real and imaginary parts become two input channels, and the decoded output is inverted back to audio. Figure 4, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/audio-fft-real-vs-decoded.png"><img src="images/audio-fft-real-vs-decoded.png" width="1600" height="1083" alt="FFT plots of real machining audio and audio decoded by the autoencoder for the same process condition." loading="lazy" decoding="async"></a><figcaption>Frequency spectrum of real audio and decoded audio for the same process condition. Figure 9, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure><figure class="fig"><a href="images/audio-digital-twin-uses.jpg"><img src="images/audio-digital-twin-uses.jpg" width="1600" height="502" alt="Diagram showing synthetic machine audio used in a digital twin for VR, root cause analysis and predictive maintenance." loading="lazy" decoding="async"></a><figcaption>Where generated machine audio fits in a digital twin. Figure 1, Varghese, Starly &amp; Iquebal, <a href="https://doi.org/10.1016/j.mfglet.2025.06.166"><em>Manufacturing Letters</em> 44 (2025)</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.</figcaption></figure>
 <h2>My role</h2>
 <p>First author. I built the model, the data pipeline and the experiments, and wrote the paper with Dr. Binil Starly and Dr. Ashif Iquebal.</p>
@@ -64,7 +65,7 @@
 </aside>
 </div>
 <nav class="next" aria-label="More projects">
-<a href="sensor-codec.html">← Sensor-token codec for real-time digital twins</a>
+<a href="sensor-codec.html">← AI sensor compression for digital twins</a>
 <a href="meltio-robotics.html">Robotic wire-laser metal DED cell →</a>
 </nav>
 </main>
