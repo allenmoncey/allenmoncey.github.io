@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bandsaw tooth inspection with M.K. Morse | Allen Moncey Varghese</title>
-<meta name="description" content="An automated computer-vision pipeline for bandsaw tooth-quality inspection, built with industry partner M.K. Morse Co., using profile-contour extraction and a quantitative wear metric.">
+<title>Vision inspection of bandsaw teeth with M.K. Morse | Allen Moncey Varghese</title>
+<meta name="description" content="A machine-vision method, built with The M.K. Morse Company, that extracts bandsaw tooth front-edge profiles and flags defective teeth with a Hotelling T-squared control chart. Presented at NAMRC 53 (2025).">
 <meta name="author" content="Allen Moncey Varghese">
 <link rel="canonical" href="https://allenmoncey.github.io/tooth-inspection.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Allen Moncey Varghese">
-<meta property="og:title" content="Bandsaw tooth inspection with M.K. Morse | Allen Moncey Varghese">
-<meta property="og:description" content="An automated computer-vision pipeline for bandsaw tooth-quality inspection, built with industry partner M.K. Morse Co., using profile-contour extraction and a quantitative wear metric.">
+<meta property="og:title" content="Vision inspection of bandsaw teeth with M.K. Morse | Allen Moncey Varghese">
+<meta property="og:description" content="A machine-vision method, built with The M.K. Morse Company, that extracts bandsaw tooth front-edge profiles and flags defective teeth with a Hotelling T-squared control chart. Presented at NAMRC 53 (2025).">
 <meta property="og:url" content="https://allenmoncey.github.io/tooth-inspection.html">
 <meta property="og:image" content="https://allenmoncey.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -33,31 +33,35 @@
 <p class="crumb"><a href="index.html#work">← All projects</a></p>
 <header class="case-head">
 <p class="eyebrow">Computer vision · Quality</p>
-<h1>Bandsaw tooth inspection with M.K. Morse</h1>
-<p class="lead">Automated vision inspection that measures tooth wear from profile contours, built with industry partner M.K. Morse Co.</p>
-<dl class="case-meta"><div><dt>Role</dt><dd>Pipeline design and development</dd></div><div><dt>Partner</dt><dd>M.K. Morse Co.</dd></div><div><dt>When</dt><dd>ASU research, 2023 –</dd></div></dl>
+<h1>Vision inspection of bandsaw teeth with M.K. Morse</h1>
+<p class="lead">Machine-vision inspection that extracts each tooth&rsquo;s front-edge profile and flags defective teeth on a Hotelling T² control chart. Presented at NAMRC 53 with M.K. Morse.</p>
+<dl class="case-meta"><div><dt>Role</dt><dd>Vision pipeline and monitoring method</dd></div><div><dt>Partner</dt><dd>The M.K. Morse Company</dd></div><div><dt>Presented</dt><dd>NAMRC 53 (2025)</dd></div></dl>
 </header>
 <div class="case-body">
 <article>
 <h2>The problem</h2>
-<p>Bandsaw blade quality depends on tooth geometry, and checking it by eye is slow, subjective and hard to scale across production. M.K. Morse wanted an objective, repeatable measure of tooth condition.</p>
+<p>Bandsaw teeth are milled before they are set and heat-treated. Band sawing removes less than 0.001 in (0.025 mm) per tooth, so the condition of each tooth edge matters: burrs and deformation left by milling cause uneven wear, premature blade failure and out-of-square cuts. They also confuse the machine vision used in the next step, setting, which cannot tell a burr from the tooth itself. Tooth quality was judged by eye, so M.K. Morse wanted a quantitative measure of each tooth.</p>
 <h2>Approach</h2>
+<ul>
+<li><strong>Imaging:</strong> a 16 MP monochrome camera with a telecentric lens, with a bar light and a back light, viewing the band from above before setting.</li>
+<li><strong>Experiment:</strong> milling runs varying feed, burr-plate material and burr-plate indexing, sampling the first, middle and last band in each pack.</li>
+</ul>
 <ol class="flow">
-<li>Image the blade teeth.</li>
-<li>Extract each tooth&rsquo;s profile contour from the image.</li>
-<li>Compare profiles to compute a quantitative wear metric.</li>
-<li>Flag defective or worn teeth automatically.</li>
+<li>Segment the teeth with contour detection in OpenCV, chosen over Canny edges, Otsu thresholding and active contours because the backlit images segment cleanly and contours give precise profiles.</li>
+<li>Crop each tooth, remove its orientation and extract the front-edge profile.</li>
+<li>Describe the profile with the mean, standard deviation and kurtosis of its edge coordinates, then standardize them.</li>
+<li>Build a Hotelling T² control chart from eight teeth that experts judged good (α = 0.1) and flag any tooth above the upper control limit.</li>
 </ol>
 <h2>Results</h2>
-<div class="results"><div><strong>Objective</strong><span>quantitative wear metric replaces visual judgment</span></div><div><strong>Scalable</strong><span>automated pipeline instead of manual inspection</span></div></div>
-<p>The system replaced manual inspection with an automated, scalable vision pipeline built around a quantitative wear metric.</p>
-
+<div class="results"><div><strong>38 teeth</strong><span>from 20 images at 4048 × 3036 px</span></div><div><strong>UCL 17.10</strong><span>Hotelling T² control limit</span></div><div><strong>7.6 vs 739</strong><span>T² of a good tooth vs a defective one</span></div></div>
+<p>Across teeth milled with different parameters, good teeth scored below the limit (for example 7.6, 9.5 and 15.7) while burred or deformed teeth scored far above it (240, 342 and 739). The method separated the good teeth from the bad ones in the experiment and turned a visual judgment into a single number that can be tracked on a control chart. Next steps are a broader experiment, faster automated code and profile skewness as a feature for spotting burrs and chips.</p>
+<h2>Figures</h2><figure class="fig"><a href="images/bandsaw-inspection-setup.jpg"><img src="images/bandsaw-inspection-setup.jpg" width="1600" height="673" alt="Inspection rig with a monochrome camera and telecentric lens above the band, a bar light and a back light, next to a top-view image of teeth showing a burr." loading="lazy" decoding="async"></a><figcaption>Inspection setup: 16 MP monochrome camera with telecentric lens, bar light and back light; a burr is visible in the top-view image. Slide from Varghese, Iquebal, Tarr &amp; Rakurty, NAMRC 53 presentation (2025).</figcaption></figure><figure class="fig"><a href="images/bandsaw-mill-doe.jpg"><img src="images/bandsaw-mill-doe.jpg" width="1600" height="485" alt="Photo and diagram of a band pack clamped in soft jaws against a burr plate in the milling setup, with first, middle and last bands marked." loading="lazy" decoding="async"></a><figcaption>Milling experiment: band pack, soft jaws and burr plate, with the first, middle and last bands sampled. Slide from Varghese, Iquebal, Tarr &amp; Rakurty, NAMRC 53 presentation (2025).</figcaption></figure><figure class="fig"><a href="images/bandsaw-profile-extraction.png"><img src="images/bandsaw-profile-extraction.png" width="1600" height="732" alt="Pipeline from captured image to extracted tooth, profile, orientation removal and extracted front edge." loading="lazy" decoding="async"></a><figcaption>From the captured image to the front-edge profile of each tooth. Slide from Varghese, Iquebal, Tarr &amp; Rakurty, NAMRC 53 presentation (2025).</figcaption></figure><figure class="fig"><a href="images/bandsaw-t2-chart.png"><img src="images/bandsaw-t2-chart.png" width="1600" height="701" alt="Hotelling T-squared control chart of tooth samples with the upper control limit at 17.10; several samples spike far above it." loading="lazy" decoding="async"></a><figcaption>Hotelling T² control chart of the inspected teeth; the dashed line is the upper control limit (17.10). Slide from Varghese, Iquebal, Tarr &amp; Rakurty, NAMRC 53 presentation (2025).</figcaption></figure><figure class="fig"><a href="images/bandsaw-test-teeth.png"><img src="images/bandsaw-test-teeth.png" width="1600" height="628" alt="Three test teeth with their front-edge profiles and T-squared values of 739.27, 15.70 and 7.57." loading="lazy" decoding="async"></a><figcaption>Test teeth: a defective tooth (T² = 739.3) against two good ones (15.7 and 7.6). Slide from Varghese, Iquebal, Tarr &amp; Rakurty, NAMRC 53 presentation (2025).</figcaption></figure>
 <h2>My role</h2>
-<p>I designed and built the defect-detection pipeline, from contour extraction to the wear metric, working with the industry partner.</p>
+<p>I developed the image-processing pipeline and the T² monitoring method and presented the work at NAMRC 53, with Dr. Ashif Iquebal (ASU) and Joseph Tarr and Chandra Sekhar Rakurty (M.K. Morse).</p>
 </article>
 <aside class="side" aria-label="Project details">
-<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>Contour extraction</li><li>Image segmentation</li><li>Defect detection</li><li>Metrology</li></ul></div>
-<div class="panel"><h3>Links</h3><ul class="links"><li data-code="tooth-inspection" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Bandsaw%20tooth%20inspection%20with%20M.K.%20Morse">Ask me about this project</a></li></ul></div>
+<div class="panel"><h3>Tools &amp; methods</h3><ul class="chips"><li>Python</li><li>OpenCV</li><li>Contour detection</li><li>Telecentric machine vision</li><li>Hotelling T² / multivariate SPC</li><li>Design of experiments</li></ul></div>
+<div class="panel"><h3>Links</h3><ul class="links"><li data-code="tooth-inspection" hidden><a href="#">Code on GitHub ↗</a></li><li><a href="mailto:allen.moncey@gmail.com?subject=Vision%20inspection%20of%20bandsaw%20teeth%20with%20M.K.%20Morse">Ask me about this project</a></li></ul></div>
 
 </aside>
 </div>
